@@ -18,7 +18,7 @@ CORS(app)
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 !! Running this funciton will add one
 '''
-# db_drop_and_create_all()
+db_drop_and_create_all()
 
 # ROUTES
 
@@ -92,13 +92,13 @@ def edit_drink(payload, drinks_id):
         drink.recipe = recipe_data
 
         drink.update()
-        drink.recipe = recipe_data
     except BaseException:
         abort(500)
 
     return jsonify({
         'success': True,
-        'drinks': drink.recipe,
+        'drinks': body.get('recipe'),
+        'title': title_data
     })
 
 
