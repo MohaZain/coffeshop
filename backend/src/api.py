@@ -183,3 +183,11 @@ def forbidden(error):
         "error": 403,
         "message": "forbidden"
     }), 403
+    
+@app.errorhandler(AuthError)
+def auth_error(error):
+    return jsonify({
+        "success": False,
+        "error": error.status_code,
+        "message": error.error['description']
+    }), error.status_code
