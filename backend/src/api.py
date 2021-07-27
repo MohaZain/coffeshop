@@ -120,10 +120,6 @@ def delete_drink(payload, drinks_id):
     })
 
 # Error Handling
-'''
-Example error handling for unprocessable entity
-'''
-
 
 @app.errorhandler(422)
 def unprocessable(error):
@@ -157,10 +153,7 @@ def not_found(error):
         "message": "resource not found"
     }), 404
 
-'''
-@TODO implement error handler for AuthError
-    error handler should conform to general task above
-'''
+
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
