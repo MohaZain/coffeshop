@@ -87,18 +87,19 @@ def edit_drink(payload, drinks_id):
         recipe_data = recipe_data.replace("\'", "\"")
 
         title_data = body.get('title')
-
-        drink.title = title_data
-        drink.recipe = recipe_data
+        if title_data:
+            drink.title = title_data
+        if recipe_data:
+            drink.recipe = recipe_data
 
         drink.update()
+        
     except BaseException:
         abort(500)
 
     return jsonify({
         'success': True,
-        'drinks': body.get('recipe'),
-        'title': title_data
+        'drinks': [drink.recipe]
     })
 
 
@@ -140,13 +141,6 @@ def internal_server(error):
     }), 500
 
 
-@app.errorhandler(400)
-def bad_request(error):
-    return jsonify({
-        "success": False,
-        "error": 400,
-        "message": "bad request"
-    }), 400
 
 
 @app.errorhandler(404)
@@ -158,31 +152,7 @@ def not_found(error):
     }), 404
 
 
-@app.errorhandler(400)
-def bad_request(error):
-    return jsonify({
-        "success": False,
-        "error": 400,
-        "message": "bad request"
-    }), 400
 
-
-@app.errorhandler(401)
-def Unuthorized(error):
-    return jsonify({
-        "success": False,
-        "error": 401,
-        "message": "Unuthorized"
-    }), 401
-
-
-@app.errorhandler(403)
-def forbidden(error):
-    return jsonify({
-        "success": False,
-        "error": 403,
-        "message": "forbidden"
-    }), 403
     
 @app.errorhandler(AuthError)
 def auth_error(error):
